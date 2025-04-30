@@ -14,12 +14,21 @@
   </p>
 
 
-<dl>Protien (g)</dl>
+<dl>
+  <dt>Carbs (g)</dt>
+  <dd><%= @g_carbs %></dd>
 
-<dl>Fat (g)</dl>
+  <dt>Protein (g)</dt>
+  <dd><%= @g_protein %></dd>
 
-<dl>Total calories</dl>
+  <dt>Fat (g)</dt>
+  <dd><%= @g_fat %></dd>
 
-<dl>Notes</dl>
+  <dt>Total calories (kcal) </dt>
+  <dd><%= @kcal %></dd>
+
+  <dt>Notes</dt>
+  <dd><%= simple_format(@notes) %></dd>
+</dl>
 
 <a href="/blank_form">Estimate another</a>

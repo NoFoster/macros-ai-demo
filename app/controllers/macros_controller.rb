@@ -5,17 +5,17 @@ class MacrosController < ApplicationController
   end
 
   def do_magic
-    @the_description = params.fetch("description_param")
-    @the_image = params.fetch("image_param")
+    @the_description = params.fetch("description_param", "")
+    @the_image = params.fetch("image_param", "")
 
     @the_image_converted = DataURI.convert(@the_image)
 
     chat = OpenAI::Chat.new
-    chat.model = "GPT-o4 mini"
+    chat.model = "gpt-4.1-nano"
     chat.system("You are an expert nutritionist. Esitmate the macronutrients (carbohydrates, protein, and fat) in grams, as well as total calories in kcal.:")
 
         
-    chat.user(@the_description, image: @the_image)
+    #chat.user(@the_description, image: @the_image)
 
     chat.schema = '{
       "name": "nutrition_info",
@@ -43,15 +43,22 @@ class MacrosController < ApplicationController
           "carbohydrates",
           "protein",
           "fat",
-          "total_calories"
+          "total_calories",
+          "notes"
         ],
         "additionalProperties": false
       },
       "strict": true
     }'
 
-    @result = chat.assistant!
-    
+    result = chat.assistant!
+
+    @g_carbs = result.fetch("carbohydrates")
+    @g_protein = result.fetch("protein")
+    @g_fat = result.fetch("fat")
+    @kcal = result.fetch("total_calories")
+    @notes = result.fetch("notes")
+  
 
     render({ :template => "macro_templates/results"})
   end
