@@ -6,14 +6,13 @@
 </p>
 
 <p>
-<img src="<%= @the_image %>"height="200">
+<img src="<%= @the_image_converted %>"height="200">
 </p>
 
 <p>
-  <%= @result %>
+  <%= simple_format(@result) %>
   </p>
 
-<dl>Carbs (g)</dl>
 
 <dl>Protien (g)</dl>
 
@@ -22,3 +21,5 @@
 <dl>Total calories</dl>
 
 <dl>Notes</dl>
+
+<a href="/blank_form">Estimate another</a>
